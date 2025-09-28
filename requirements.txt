@@ -8,3 +8,4 @@ requests==2.32.3
 azure-storage-blob==12.22.0
 python-bidi==0.4.2
 arabic-reshaper==3.0.0
+pyodbc==5.1.0

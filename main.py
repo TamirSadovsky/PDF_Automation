@@ -1,5 +1,4 @@
 import os
-import pyodbc
 import arabic_reshaper
 from bidi.algorithm import get_display
 from reportlab.pdfgen import canvas
@@ -16,6 +15,8 @@ import requests
 import logging
 from flask import Flask, request, jsonify
 from azure.storage.blob import ContentSettings 
+import pyodbc
+
 
 
 # Load env vars and font
@@ -36,13 +37,16 @@ def format_date_with_leading_zeros(date_str):
 
 def get_connection_string():
     return (
-        f"DRIVER={{ODBC Driver 17 for SQL Server}};"
-        f"SERVER={os.getenv('DB_SERVER')},{os.getenv('DB_PORT')};"
+        "DRIVER={FreeTDS};"
+        f"SERVER={os.getenv('DB_SERVER')};"
+        f"PORT={os.getenv('DB_PORT','1433')};"
         f"DATABASE={os.getenv('DB_NAME')};"
         f"UID={os.getenv('DB_USER')};"
         f"PWD={os.getenv('DB_PASS')};"
-        f"Encrypt=yes;TrustServerCertificate=yes;"
+        "TDS_Version=7.4;"
+        "Encrypt=yes;TrustServerCertificate=yes;"
     )
+
 
 def fetch_from_db(query, params):
     conn = pyodbc.connect(get_connection_string())
