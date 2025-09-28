@@ -1,5 +1,7 @@
 import os
-import pyodbc
+import USE_ODBC = os.getenv("USE_ODBC") == "1"
+if USE_ODBC:
+    import pyodbc
 import arabic_reshaper
 from bidi.algorithm import get_display
 from reportlab.pdfgen import canvas
