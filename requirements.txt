@@ -1,0 +1,9 @@
+arabic_reshaper==3.0.0
+azure_storage==0.37.0
+Flask==2.2.5
+Pillow==9.5.0
+Pillow==11.3.0
+pyodbc==4.0.39
+PyPDF2==3.0.1
+reportlab==4.4.2
+Requests==2.32.5
