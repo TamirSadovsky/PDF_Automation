@@ -27,4 +27,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . /app
 
 # Gunicorn listens on $PORT provided by Render
-CMD ["gunicorn", "-w", "1", "--threads", "2", "--timeout", "120", "-b", "0.0.0.0:${PORT}", "main:app"]
+CMD ["sh","-c","gunicorn -w 1 --threads 2 --timeout 120 -b 0.0.0.0:${PORT} main:app"]
