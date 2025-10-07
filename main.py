@@ -37,8 +37,9 @@ def format_date_with_leading_zeros(date_str):
 
 def get_connection_string():
     return (
-        "DRIVER={ODBC Driver 18 for SQL Server};"
-        f"SERVER={os.getenv('DB_SERVER')},{os.getenv('DB_PORT','1433')};"
+        "DRIVER={FreeTDS};"
+        f"SERVER={os.getenv('DB_SERVER')};"
+        f"PORT={os.getenv('DB_PORT','1433')};"
         f"DATABASE={os.getenv('DB_NAME')};"
         f"UID={os.getenv('DB_USER')};"
         f"PWD={os.getenv('DB_PASS')};"

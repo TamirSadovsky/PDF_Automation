@@ -1,13 +1,9 @@
 .env
 /node_modules
 /.vscode
-example.jpg
 generate_invoice_pdf.py
 generate_save_send_invoice.py
 image.jpg
 invoice_debug.log
-logo.png
-logo2.png
-Ram_Tire_logo.jpg
 sendInvoiceMessage.js
 test_send_invoice.py
