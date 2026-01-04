@@ -37,7 +37,7 @@ def format_date_with_leading_zeros(date_str):
 
 def get_connection_string():
     return (
-        "DRIVER={FreeTDS};"
+        "DRIVER={ODBC Driver 17 for SQL Server};"
         f"SERVER={os.getenv('DB_SERVER')};"
         f"PORT={os.getenv('DB_PORT','1433')};"
         f"DATABASE={os.getenv('DB_NAME')};"
@@ -57,7 +57,7 @@ def fetch_from_db(query, params):
     return results
 
 
-def upload_to_azure_and_get_relative_sas_download(blob_name, local_file_path, expires_minutes=60):
+def upload_to_azure_and_get_relative_sas_download(blob_name, local_file_path, expires_minutes=3600):
     from urllib.parse import quote
     account_name = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
     account_key = os.getenv("AZURE_STORAGE_ACCOUNT_KEY")
@@ -83,7 +83,7 @@ def upload_to_azure_and_get_relative_sas_download(blob_name, local_file_path, ex
     logging.debug(f"Generated relative SAS path: {relative_path}")
     return relative_path
 
-def upload_to_azure_and_get_relative_sas(blob_name, local_file_path, expires_minutes=60):
+def upload_to_azure_and_get_relative_sas(blob_name, local_file_path, expires_minutes=3600):
     from urllib.parse import quote
     account_name = os.getenv("AZURE_STORAGE_ACCOUNT_NAME")
     account_key = os.getenv("AZURE_STORAGE_ACCOUNT_KEY")
@@ -169,6 +169,8 @@ def generate_invoice_pdf(client_id, invoice_id):
     payments = fetch_from_db("SELECT * FROM Payments WHERE InvoiceID = ? AND ClientID = ?", (invoice_id, client_id))
     customer_name = invoice.get("CostomerName", "לקוח")
     pancheria_name = client.get("ClientName", "פנצ׳ריה")
+    logo_path = client.get("LogoPath", "לוגו")
+    print(logo_path)
     payment = payments[0] if payments else {}
     items = [
         {
@@ -187,7 +189,7 @@ def generate_invoice_pdf(client_id, invoice_id):
     buffer = BytesIO()
     c = canvas.Canvas(buffer, pagesize=A4)
     c.setFont("NotoSansHebrew", 12)
-    logo = Image.open("example.jpg")
+    logo = Image.open("logo_path")
     c.drawInlineImage(logo, x=138, y=750, width=240, height=90)
 
     def draw_he(text, x, y, size=12):
